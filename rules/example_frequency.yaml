@@ -47,8 +47,12 @@ filter:
 
 # (Required)
 # The alert is use when a match is found
+
+include: ["@timestamp", "_index", "host.name", "LogLevel", "message"]  # 这里是es索引中的字段，下边报警模板会使用
 alert:
-- "elastalert_modules.feishu_alert.FeishuAlert"
+  - "elastalert.elastalert_modules.feishu_alert.FeishuAlert"
+#alert:
+#- "elastalert_modules.feishu_alert.FeishuAlert"
 
 # (required, feishu specific)
 # bot id for feishu
@@ -64,10 +68,14 @@ feishualert_skip:
   start: "01:00:00"
   end: "09:00:00"
 
-# content
+# 告警内容，使用{}可匹配matches
 feishualert_body:
   "
-  告警策略:  {feishualert_title}\n
-  总请求数:  {num_hits}\n
-  触发时间:  {feishualert_time}
+  【告警主机】:  {host.name}\n
+  【告警主题】:  {feishualert_title}\n
+  【告警时间】:  {feishualert_time}\n
+  【业务索引】:  {_index}\n
+  【时间戳】:  {@timestamp}\n
+  【日志级别】:  {LogLevel}  
+  【错误日志】:  {message}
   "
