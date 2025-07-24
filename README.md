@@ -9,6 +9,8 @@ pip install elastalert
 ``` 
 es_host: elasticsearch 地址
 es_port: elasticsearch 端口
+es_username: xxxx
+es_password: xxx
 ```
 ### rules/example_frequency.yaml
 ``` 
